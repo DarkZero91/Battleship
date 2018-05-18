@@ -1,9 +1,9 @@
-Handwriting Recognition
+Battleship
 =====================
 
 **What it is:**
 
-Python application for optical character recognition of characters from the dead sea scrolls. 
+Game of Battleship using a BDI system. 
 
 **Setup:**
 
