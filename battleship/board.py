@@ -30,6 +30,7 @@ class Board(object):
                 # Backtrack
                 for j in range(0, i):
                     self.grid[locations[j][1]][locations[j][0]] = 0
+                print("FAULTY PLACEMENT")
                 return False
 
         self.print_board()
