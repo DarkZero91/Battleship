@@ -10,8 +10,8 @@ class Board(object):
         self.color = [random()*255, random()*255, random()*255]
         self.reset_board()
 
-    def ship_at_location(self, x, y):
-        return self.grid[y][x] != 0
+    def ship_at_location(self, b, x, y):
+        return b.grid[y][x] != 0
 
     # orientation may be one of:
     # 0 -> up to down,
@@ -33,8 +33,8 @@ class Board(object):
                 print("FAULTY PLACEMENT")
                 return False
 
-        self.print_board()
-        self.visualize_board()
+        # self.print_board()
+        # self.visualize_board()
         return True
 
     def reset_board(self):
@@ -46,7 +46,6 @@ class Board(object):
             print('{:4}'.format(str(row)))
 
     def visualize_board(self):
-
         w, h = self.width, self.height
         data = np.zeros((h, w, 3), dtype=np.uint8)
         for i in range(self.height):
@@ -56,6 +55,10 @@ class Board(object):
         img = Image.fromarray(data, 'RGB')
         img = img.resize(size=(1000, 1000))
         img.show()
+
+    def print_hitgrid(self):
+        for row in self.hit_grid:
+            print('{:4}'.format(str(row)))
 
     def _valid_location(self, x, y):
         valid = True
