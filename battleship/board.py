@@ -10,8 +10,30 @@ class Board(object):
         self.color = [random()*255, random()*255, random()*255]
         self.reset_board()
 
+    def check_won(self):
+        if(self.finish):
+            print "Gewonnen!"
+            return True
+
+    def print_status(self, b):
+        print("\nStatus:\nShips:")
+        print(b.ships)
+        print("Hits:")
+        for i in b.ships:
+            print(i.name, i.hits)
+
     def ship_at_location(self, b, x, y):
-        return b.grid[y][x] != 0
+        ship = b.grid[y][x]
+        if type(ship) is not int:
+            self.hit_grid[y][x] = True
+            ship.hits += 1
+            if ship.hits == ship.size:
+                for i in range(len(b.ships)):
+                    if b.ships[i] == ship:
+                        b.ships.pop(i)
+                        if b.ships == []:
+                            self.finish = True
+                        break
 
     # orientation may be one of:
     # 0 -> up to down,
@@ -33,6 +55,7 @@ class Board(object):
                 print("FAULTY PLACEMENT")
                 return False
 
+        self.ships.append(ship)
         # self.print_board()
         # self.visualize_board()
         return True
@@ -40,6 +63,8 @@ class Board(object):
     def reset_board(self):
         self.grid = [[0] * self.width for x in range(self.height)]
         self.hit_grid = [[0] * self.width for x in range(self.height)]
+        self.ships = []
+        self.finish = False
 
     def print_board(self):
         for row in self.grid:
