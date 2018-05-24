@@ -1,5 +1,3 @@
-from random import random
-
 import numpy as np
 from PIL import Image
 
@@ -7,33 +5,22 @@ class Board(object):
     def __init__(self, width=10, height=10):
         self.width = width
         self.height = height
-        self.color = [random()*255, random()*255, random()*255]
         self.reset_board()
 
-    def check_won(self):
-        if(self.finish):
-            print "Gewonnen!"
-            return True
-
-    def print_status(self, b):
-        print("\nStatus:\nShips:")
-        print(b.ships)
-        print("Hits:")
-        for i in b.ships:
-            print(i.name, i.hits)
-
-    def ship_at_location(self, b, x, y):
-        ship = b.grid[y][x]
-        if type(ship) is not int:
+    def ship_at_location(self, x, y):
+        ship = self.grid[y][x]
+        if ship != 0:
             self.hit_grid[y][x] = True
-            ship.hits += 1
-            if ship.hits == ship.size:
-                for i in range(len(b.ships)):
-                    if b.ships[i] == ship:
-                        b.ships.pop(i)
-                        if b.ships == []:
-                            self.finish = True
-                        break
+        else:
+            self.hit_grid[y][x] = False
+        return ship
+
+    def hit_ship(self, ship):
+        ship.hits += 1
+        if ship.hits == ship.size:
+            return ship
+        else:
+            return 0
 
     # orientation may be one of:
     # 0 -> up to down,
@@ -55,34 +42,31 @@ class Board(object):
                 print("FAULTY PLACEMENT")
                 return False
 
-        self.ships.append(ship)
-        # self.print_board()
-        # self.visualize_board()
-        return True
+        return ship
 
     def reset_board(self):
         self.grid = [[0] * self.width for x in range(self.height)]
         self.hit_grid = [[0] * self.width for x in range(self.height)]
-        self.ships = []
-        self.finish = False
 
-    def print_board(self):
-        for row in self.grid:
-            print('{:4}'.format(str(row)))
-
-    def visualize_board(self):
+    def visualize_board(self, color):
         w, h = self.width, self.height
         data = np.zeros((h, w, 3), dtype=np.uint8)
         for i in range(self.height):
             for j in range(self.width):
                 if type(self.grid[i][j]) is not int:
-                    data[i][j] = self.color
+                    data[i][j] = color
         img = Image.fromarray(data, 'RGB')
         img = img.resize(size=(1000, 1000))
         img.show()
 
     def print_hitgrid(self):
+        print("\nHitgrid:")
         for row in self.hit_grid:
+            print('{:4}'.format(str(row)))
+
+    def print_board(self):
+        print("\nBord:")
+        for row in self.grid:
             print('{:4}'.format(str(row)))
 
     def _valid_location(self, x, y):
