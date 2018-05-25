@@ -1,17 +1,17 @@
-from battleship.board import *
-from battleship.ships import *
+from battleship.player import *
 
-b = Board()
-s = Cruiser()
-b.place_ship(s, 0, 0, 0)
+p1 = Player()
+p2 = Player()
 
-b2 = Board()
-s2 = Cruiser()
-b2.place_ship(s2, 1, 2, 0)
+p2.place_ship(Cruiser(), 0, 0, 0) # place_ship(type, x, y, orientation)
+p2.place_ship(Cruiser(), 1, 2, 0)
 
+# p2.visualize_board()
+p2.print_board()
 
-for i in range(b.height):
-    for j in range(b.width):
-        b2.hit_grid[j][i] = b2.ship_at_location(b, i, j)
+p1.make_guess(p2, 0, 0)
+p1.make_guess(p2, 0, 1)
+p1.make_guess(p2, 1, 2)
 
-b2.print_hitgrid()
+p1.print_enemyhitgrid(p2)
+p1.print_status(p2)
