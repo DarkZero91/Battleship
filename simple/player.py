@@ -122,7 +122,7 @@ class Player:
         cv2.imshow(self.name + 'grid', self.grid * 255)
         cv2.imshow(self.name + 'hitgrid', self.hitGrid * 255)
         cv2.imshow(self.name + "potentatial_destroyers", self.potentialShipMaps[4] * 255)
-        cv2.waitKey(0)
+        cv2.waitKey(20)
     
 if __name__ == "__main__":
     p1 = Player("p1")
