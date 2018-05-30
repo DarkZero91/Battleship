@@ -90,7 +90,7 @@ class Player:
         y = np.argmax(np.max(potention, 1))
         x = np.argmax(potention[y])
         max = np.max(np.max(potention))
-        cv2.imshow("heatmap" + self.name, cv2.resize(potention, (100,100), interpolation = cv2.INTER_NEAREST) * (255 / max))
+        cv2.imshow("heatmap" + self.name, cv2.resize(potention, (100,100), interpolation = cv2.INTER_NEAREST) * (255. / max))
         print "best guess", x, y
         return x, y
                 

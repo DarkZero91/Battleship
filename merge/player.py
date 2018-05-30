@@ -10,7 +10,7 @@ class Player:
 
         self.name = name
         self.ships = {"Carrier" : Carrier(), "Battleship" : Battleship(), "Cruiser" : Cruiser(),"Submarine" : Submarine(),"Destroyer" : Destroyer()}
-        
+        self.shipsLeft = len(self.ships.keys())
     
     def placeShips(self):
         nonce = 1
@@ -30,6 +30,8 @@ class Player:
                 if fits:
                     ship.place(x, y, orientation, self.board, nonce)
                     nonce += 1
+    def alive(self):
+        return self.shipsLeft != 0
                     
     def getShot(self, x, y):
         uid = self.board.getShot(x, y)
@@ -42,6 +44,8 @@ class Player:
                 alive = ship.alive(self.board)
                 if not alive:
                    killed = name
+                   self.shipsLeft -= 1
+                   print self.name, name, "killed.."
             return 1, killed
         return 0, killed
     
@@ -50,8 +54,9 @@ class Player:
         result, killed = player.getShot(x,y)
         self.board.processShot(x,y, result)
         #DEBUG
-        if result == 0:
-            print "MISS!"
-        else:
-            print "HIT!"
+        #print self.name + " shoots at ", x, y
+        #if result == 0:
+        #    print "MISS!"
+        #else:
+        #    print "HIT!"
             

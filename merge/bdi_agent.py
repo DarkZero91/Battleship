@@ -1,6 +1,7 @@
 from player import Player
 import numpy as np
 import cv2
+import random
 
 class BDIAgent(Player):
     
@@ -26,3 +27,19 @@ class BDIAgent(Player):
                 potMap += result
             potMap[potMap != 0] = 1
             self.potentialShipLocations[name] = potMap
+            
+    def bestGuess(self):
+        potMap = np.zeros_like(self.myShips)
+        for name in self.ships.keys():
+            potMap += self.potentialShipLocations[name]
+        y = np.argmax(np.max(potMap, 1))
+        x = np.argmax(potMap[y])
+        return x, y
+    
+    def playRound(self, otherPlayer):
+        x, y = self.bestGuess()
+        if self.board.placesIShot[y, x] == 1:
+            x = random.randint(0, self.board.gridSize - 1)
+            y = random.randint(0, self.board.gridSize - 1)
+        self.shoot(otherPlayer, x, y)
+        
