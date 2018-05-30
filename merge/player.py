@@ -49,4 +49,9 @@ class Player:
     def shoot(self, player, x, y):
         result, killed = player.getShot(x,y)
         self.board.processShot(x,y, result)
+        #DEBUG
+        if result == 0:
+            print "MISS!"
+        else:
+            print "HIT!"
             

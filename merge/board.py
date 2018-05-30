@@ -21,7 +21,8 @@ class Board:
         self.hitGrid[y, x] = hit
         
     def isPresent(self, uid):
-        presence  = self.grid[self.grid == uid]
+        presence = np.zeros_like(self.grid)
+        presence[self.grid == uid] = 1
         cnt = np.sum(np.sum(presence, 1))
         return cnt != 0
         
