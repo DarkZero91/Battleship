@@ -90,7 +90,7 @@ class Player:
         y = np.argmax(np.max(potention, 1))
         x = np.argmax(potention[y])
         max = np.max(np.max(potention))
-        cv2.imshow("heatmap" + self.name, potention * (255 / max))
+        cv2.imshow("heatmap" + self.name, cv2.resize(potention, (100,100), interpolation = cv2.INTER_NEAREST) * (255 / max))
         print "best guess", x, y
         return x, y
                 
@@ -119,10 +119,11 @@ class Player:
         return np.sum(np.sum(self.grid)) == 0
     
     def render(self):
-        cv2.imshow(self.name + 'grid', self.grid * 255)
-        cv2.imshow(self.name + 'hitgrid', self.hitGrid * 255)
-        cv2.imshow(self.name + "potentatial_destroyers", self.potentialShipMaps[4] * 255)
-        cv2.waitKey(20)
+        h, w = self.grid.shape
+        cv2.imshow(self.name + 'grid', cv2.resize(self.grid, (100,100),interpolation =  cv2.INTER_NEAREST) * 255)
+        cv2.imshow(self.name + 'hitgrid', cv2.resize(self.hitGrid,(100,100),interpolation = cv2.INTER_NEAREST) * 255)
+        cv2.imshow(self.name + "potentatial_destroyers", cv2.resize(self.potentialShipMaps[4],(100,100),interpolation = cv2.INTER_NEAREST) * 255)
+        cv2.waitKey(200)
     
 if __name__ == "__main__":
     p1 = Player("p1")
