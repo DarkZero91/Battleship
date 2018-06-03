@@ -15,9 +15,35 @@ class BDIAgent(Player):
         
         self.potentialShipLocations = {}
         self.updatePotentialShipLocations()
+        
+        self.killLocations = {}
+        self.potentialKillLocations = {}
+        self.initKillLocations()
+        
+    def initKillLocations(self):
+        for name in self.ships.keys():
+            self.killLocations[name] = np.ones_like(self.hitGrid, dtype = np.int16) * -1
+            self.potentialKillLocations[name] = np.ones_like(self.hitGrid, dtype = np.int16) * -1
+            
+    def processKill(self, shipname, x, y):
+        self.killLocations[shipname][x,y] = 1
+       
+        
     
-    
-    
+    def updatePotentialKillMap(self):
+        
+        for name in self.ships.keys():
+            potmap = np.zeros_like(self.hitGrid)
+            ship = self.ships[name]
+            for mask in ship.masks:
+                kills = np.zeros_like(self.myShips)
+                kills[self.killLocations[name] == 1] = 1
+                result = cv2.filter2D(kills, -1 , mask)
+                potmap += result
+            potkill = (potmap != 0) & (self.hitGrid == 1)
+            self.potentialKillLocations[name][potkill] = 1
+            
+            
     def updatePotentialShipLocations(self):
         for name in self.ships.keys():
             ship = self.ships[name]
@@ -36,10 +62,28 @@ class BDIAgent(Player):
         x = np.argmax(potMap[y])
         return x, y
     
+    def visualize(self):
+        if self.name == "Bob":
+            potmap = self.potentialKillLocations["Destroyer"].copy()
+            potmap[potmap == 0] = 0
+            potmap[potmap == -1] = 0
+            potmap[potmap == 1] = 255
+            h, w = potmap.shape
+            potmap = np.reshape(potmap, (h,w,1))
+            potmap = potmap.astype(np.uint8)
+            toshow = cv2.resize(self.myShips, (100,100), cv2.INTER_NEAREST)
+            cv2.imshow("bob potKillMap", potmap)
+            cv2.waitKey(50)
+    
     def playRound(self, otherPlayer):
+        self.updatePotentialShipLocations()
+        self.updatePotentialKillMap()
         x, y = self.bestGuess()
         if self.board.placesIShot[y, x] == 1:
             x = random.randint(0, self.board.gridSize - 1)
             y = random.randint(0, self.board.gridSize - 1)
-        self.shoot(otherPlayer, x, y)
+        result, killed = self.shoot(otherPlayer, x, y)
+        if result == 1 and killed != "":
+            self.processKill(killed, x, y)
+        self.visualize()
         

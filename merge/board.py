@@ -4,8 +4,8 @@ class Board:
     
     def __init__(self, gridsize):
         self.gridSize = gridsize
-        self.grid = np.zeros((self.gridSize,self.gridSize), dtype = np.uint8)
-        self.hitGrid = np.zeros((self.gridSize,self.gridSize), dtype = np.uint8)
+        self.grid = np.zeros((self.gridSize,self.gridSize), dtype = np.int16)
+        self.hitGrid = np.zeros((self.gridSize,self.gridSize), dtype = np.int16)
         self.placesIShot = np.zeros_like(self.grid)
         
     def fits(self, x, y, size, orientation):

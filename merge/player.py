@@ -59,4 +59,5 @@ class Player:
         #    print "MISS!"
         #else:
         #    print "HIT!"
+        return result, killed
             

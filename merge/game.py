@@ -28,7 +28,11 @@ class Game:
         
 if __name__ == "__main__":
     game = Game(10)
-    
+    rounds = 0
     done = False
     while not done:
+        rounds += 1
         done = game.playRound()
+        
+    print "game done in ", rounds, " rounds"
+        
