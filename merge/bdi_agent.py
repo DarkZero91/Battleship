@@ -84,7 +84,7 @@ class BDIAgent(Player):
             potmap = potmap.astype(np.uint8)
             toshow = cv2.resize(self.myShips, (100,100), cv2.INTER_NEAREST)
             cv2.imshow("bob potKillMap", potmap)
-            cv2.waitKey(50)
+            cv2.waitKey(200)
     
     def playRound(self, otherPlayer):
         self.updatePotentialShipLocations()
