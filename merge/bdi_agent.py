@@ -52,12 +52,23 @@ class BDIAgent(Player):
                 result = cv2.filter2D(self.hitGrid, -1, mask)
                 potMap += result
             potMap[potMap != 0] = 1
+            potMap[self.board.placesIShot == 1] = 0
             self.potentialShipLocations[name] = potMap
             
     def bestGuess(self):
         potMap = np.zeros_like(self.myShips)
         for name in self.ships.keys():
             potMap += self.potentialShipLocations[name]
+        if self.name == "Bob":
+            toshow = potMap.copy()
+            toshow = toshow.astype(np.float)
+            if np.max(np.max(potMap,1)) != 0:
+                toshow /= np.max(np.max(potMap,1))
+                toshow *= 255
+                toshow = toshow.astype(np.uint8)
+                cv2.imshow("potmap", toshow)
+                cv2.waitKey(20)
+            
         y = np.argmax(np.max(potMap, 1))
         x = np.argmax(potMap[y])
         return x, y
@@ -80,6 +91,7 @@ class BDIAgent(Player):
         self.updatePotentialKillMap()
         x, y = self.bestGuess()
         if self.board.placesIShot[y, x] == 1:
+            print self.name, "fires at random location"
             x = random.randint(0, self.board.gridSize - 1)
             y = random.randint(0, self.board.gridSize - 1)
         result, killed = self.shoot(otherPlayer, x, y)
