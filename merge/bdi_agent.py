@@ -8,7 +8,7 @@ class BDIAgent(Player):
     def __init__(self, board, name):
         Player.__init__(self, board, name)
         self.placeShips()
-        
+        self.killedShips = []
         self.myShips = self.board.grid 
         self.hitGrid = self.board.hitGrid
         self.herShipsIKnow = np.zeros_like(self.myShips)
@@ -27,21 +27,24 @@ class BDIAgent(Player):
             
     def processKill(self, shipname, x, y):
         self.killLocations[shipname][x,y] = 1
-       
+        self.killedShips.append(shipname)
         
     
     def updatePotentialKillMap(self):
         
         for name in self.ships.keys():
-            potmap = np.zeros_like(self.hitGrid)
-            ship = self.ships[name]
-            for mask in ship.masks:
-                kills = np.zeros_like(self.myShips)
-                kills[self.killLocations[name] == 1] = 1
-                result = cv2.filter2D(kills, -1 , mask)
-                potmap += result
-            potkill = (potmap != 0) & (self.hitGrid == 1)
-            self.potentialKillLocations[name][potkill] = 1
+            if not name in self.killedShips:
+                potmap = np.zeros_like(self.hitGrid)
+                ship = self.ships[name]
+                for mask in ship.masks:
+                    kills = np.zeros_like(self.myShips)
+                    kills[self.killLocations[name] == 1] = 1
+                    result = cv2.filter2D(kills, -1 , mask)
+                    potmap += result
+                potkill = (potmap != 0) & (self.hitGrid == 1)
+                self.potentialKillLocations[name][potkill] = 1
+            else:
+                self.potentialKillLocations[name] = np.zeros_like(self.hitGrid)
             
             
     def updatePotentialShipLocations(self):
@@ -75,7 +78,7 @@ class BDIAgent(Player):
     
     def visualize(self):
         if self.name == "Bob":
-            potmap = self.potentialKillLocations["Destroyer"].copy()
+            potmap = self.potentialKillLocations["Battleship"].copy()
             potmap[potmap == 0] = 0
             potmap[potmap == -1] = 0
             potmap[potmap == 1] = 255
@@ -84,7 +87,7 @@ class BDIAgent(Player):
             potmap = potmap.astype(np.uint8)
             toshow = cv2.resize(self.myShips, (100,100), cv2.INTER_NEAREST)
             cv2.imshow("bob potKillMap", potmap)
-            cv2.waitKey(200)
+            cv2.waitKey(1000)
     
     def playRound(self, otherPlayer):
         self.updatePotentialShipLocations()
