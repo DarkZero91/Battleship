@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>BDI Battleship</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/shop-item.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-lg-3">
+          <h1 class="my-4">Content</h1>
+          <div class="list-group">
+            <a href="index.html" class="list-group-item">The game</a>
+            <a href="software_architecture.html" class="list-group-item">Software Architecture</a>
+            <a href="#" class="list-group-item active">BDI Agent</a>
+          </div>
+        </div>
+        <!-- /.col-lg-3 -->
+
+        <div class="col-lg-9">
+
+          <div class="card mt-4">
+            <img class="card-img-top img-fluid" src="https://thesmatstudents.files.wordpress.com/2017/06/logic_368.jpg" alt="">
+            <div class="card-body">
+              <h3 class="card-title">BDI Agent</h3>
+              <p class="card-text">
+                The BDI-agent reasons using a set amount of propositional atoms, and higher order statements. The statements are explained from the perspective of one player, playing against her opponent. Lets refer to our player as Bob, which is playing against Alice for clear writing.
+                <br /><br />
+                P_x: for all ships x, P_x indicates the positions where x is located on Bob’s board.
+                <br /><br />
+                H: The positions where Bob hit a part of Alice her ships.
+                <br /><br />
+                S: The positions where Bob shot at Alice
+                <br /><br />
+                K(P^_x), for all Alice her ships x (P^_x), K(P^_x) indicates the positions of Alice her shipparts, known to Bob.
+                <br /><br />
+                E(P^_x): for all Alice her ships x (P^_x), E(P^_x) indicates the possible positions where another part of Alice her ships might lay. This is implemented using the information from H. If Bob hit Alice at some location, all Alice her remaining ships are considered. If an near-adjacent tile of the hit location is within the range of a ship lenght, this near-adjacent tile is considered a possible location of another ship part.
+                <br /><br />
+                Bob’s goal in the game is to hit all ship parts from Alice, which is also it’s intention. Bob’s believes during the game consists of the statements about the world above.
+                <br /><br />
+                The agent currently decides on where to shoot using the following protocol:
+                <br /><br />
+                Best shot:<br/>
+                If there is a location where K(P^_x),  where Bob didn’t fire yet at the location, Bob will fire at a this location.
+                <br /><br />
+                Second best shot:<br />
+                If there is no possible ‘best shot’, Bob will fire according to the information from E(P^_x). Bob will take a sum of E(P^x) over all ships x, indicating the most probable location of another ship part. Also, Bob will take P_x into account, since Bob will give away information about the same location on his board when he fires. So, he will fire at a location with the highest probability of hitting, without giving Alice information about his ships.
+                <br /><br />
+                Third best shot:<br />
+                The same as the second best shot, although it is not possible for Bob to not give away information on his ships. So he will fire at the location with the highest probability of hitting a ship, but he will give away information of a shippart of himself.
+                <br /><br />
+                Fourth best shot:<br />
+                If the above three strategies don’t lead to a new informed shot, Bob will fire at a pseudo-random location where he didn’t fire at before.
+              </p>
+            </div>
+          </div>
+          <br />
+          <!-- /.card -->
+
+        </div>
+        <!-- /.col-lg-9 -->
+
+      </div>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white"></p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>

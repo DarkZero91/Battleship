@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>BDI Battleship</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/shop-item.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-lg-3">
+          <h1 class="my-4">Content</h1>
+          <div class="list-group">
+            <a href="index.html" class="list-group-item">The game</a>
+            <a href="#" class="list-group-item active">Software Architecture</a>
+            <a href="logic.html" class="list-group-item">BDI Agent</a>
+          </div>
+        </div>
+        <!-- /.col-lg-3 -->
+
+        <div class="col-lg-9">
+
+          <div class="card mt-4">
+            <img class="card-img-top img-fluid" src="http://www.cit.ie/contentFiles/images/computerscience/sa.jpg" alt="">
+            <div class="card-body">
+              <h3 class="card-title">Software Architecture</h3>
+              <p class="card-text">
+                The game of battleship is built in Python using a total of five classes. These classes are <i>Game</i>, <i>Ship</i>, <i>Board</i>, <i>Player</i> and <i>BDIAgent</i>.
+                <br /><br />
+                The Game class is the most abstract class and uses methods and logic found in other classes in order to describe in what manner a session of Battleship is played. In this class such things as switching between players and switching between the two game stages of Battleship is facilitated.
+                <br /><br />
+                Battleship evolves around figuring out the locations of the opponents ships by choosing locations to hit. Ships, therefore, are an important element of the game. Battleship uses a total of five ship types. These are the carrier, battleship, cruiser, submarine and destroyer. Within the game these ships differ in only two ways. These are the label or name and the dimensions of the vessel. Due to this ships have been coded by using an inheritance structure. The <i>Ship</i> class holds all information and behavior which is found in all ship types. Each particular ship type is represented by means of a ship specific class which inherits from the <i>Ship</i> class.
+                <br /><br />
+                Each player has a board at its disposal. In the original version of Battleship, the board holds information on both the location of one players own ships as well as locations of the opponents board which were hit. These locations are marked in such a way as to show whether the location harbored a ship or not. In the Python implementation of Battleship, the Board class holds similar information. It uses a <i>hitgrid</i> to keep track of locations which are hit by the opponent as well as a <i>placesIShot</i> grid. The <i>placesIShot</i> grid is used to keep track of hit locations on the opponents board, while the <i>hitgrid</i> represents hit locations on the players own board. The Board class, aside from holding information on the game state, also facilitates placing ships on the board as well as processing shots.
+                <br /><br />
+                Finally there are the <i>Player</i> and <i>BDIAgent</i> classes. These represent agents which are able to participate in a session of Battleship. The former class has methods which enables a player to place ships on the board, check whether the player is still ‘alive’, what needs to be done in order to receive a hit and how to shoot. These are the basic actions necessary for any player to play Battleship. <i>BDIAgent</i> is a sub-class of <i>Player</i> and therefore inherits all these necessary actions. In addition the agent class has methods which enable the class to autonomously engage in the game. The specif ways in which the <i>BDIAgent</i> arrives at its decisions may be found in the BDI agent section. This section introduces the Believe Decision Intention (BDI) logics involved.
+              </p>
+            </div>
+          </div>
+          <br />
+          <!-- /.card -->
+
+        </div>
+        <!-- /.col-lg-9 -->
+
+      </div>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white"></p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>
