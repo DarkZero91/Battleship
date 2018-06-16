@@ -8,14 +8,14 @@ import copy
 #TODO: (add missing/required functions from BDIAgent class) xor (inheret from BDIAgent + add overloads) (first is probably nicest)
 class MinmaxAgent(Player):
     
-    def __init__(self, board, name, depth, maxdepth):
+    def __init__(self, board, name, depth = 0, maxdepth):
         Player.__init__(self, board, name)
         self.depth = depth
         self.maxdepth = maxdepth
         
     def preference(self):
         #TODO: fix preference function
-        return 1
+        return 1 #tmp
     
     
     
@@ -27,7 +27,9 @@ class MinmaxAgent(Player):
         
         for y in xrange(size):
             for x in xrange(size):
-                #TODO: add check whether this place is already shot at.
+                #TODO: add check here whether this place is already shot at, or can be skipped for some other reason.
+                #if skippable:
+                #   continue
                 pref = self.exploreAction(opponent, x, y)
                 if pref > bestPref:
                     bestPref = pref
