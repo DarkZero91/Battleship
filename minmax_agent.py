@@ -5,7 +5,7 @@ import cv2
 import random
 import copy
 
-#TODO: (add missing/required functions from BDIAgent class) xor (inheret from BDIAgent + add overloads) (first probably nicest)
+#TODO: (add missing/required functions from BDIAgent class) xor (inheret from BDIAgent + add overloads) (first is probably nicest)
 class MinmaxAgent(Player):
     
     def __init__(self, board, name, depth, maxdepth):
@@ -27,6 +27,7 @@ class MinmaxAgent(Player):
         
         for y in xrange(size):
             for x in xrange(size):
+                #TODO: add check whether this place is already shot at.
                 pref = self.exploreAction(opponent, x, y)
                 if pref > bestPref:
                     bestPref = pref
@@ -39,10 +40,7 @@ class MinmaxAgent(Player):
     
     
     def exploreAction(self, opponent, x, y):
-        
-        #newBoard = copy.deepcopy(self.board)
-        
-        
+
         futureSelf = copy.deepcopy(self)
         futureSelf.depth += 1
         
