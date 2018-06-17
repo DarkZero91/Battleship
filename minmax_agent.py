@@ -15,7 +15,10 @@ class MinmaxAgent(Player):
         
     def preference(self):
         #TODO: fix preference function
-        return 1 #tmp
+        boardPref = self.board.evaluate()
+        #intelPref = np.sum(np.sum(placesTheOpponent knows I have a shippart there, 1))
+        
+        return boardPref #+ intelPref
     
     
     

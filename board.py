@@ -16,6 +16,9 @@ class Board:
         else:
             raise "Invalid orientation @ fit check"
         
+    def evaluate(self):
+        return np.sum(np.sum(self.hitGrid, 1)) + np.sum(np.sum(self.grid, 1))  ## nr of hits + nr of shipparts left
+        
     def processShot(self, x, y, hit):
         self.placesIShot[y, x] = 1
         self.hitGrid[y, x] = hit
