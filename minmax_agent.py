@@ -46,9 +46,6 @@ class MinmaxAgent(Player):
                 if self.board.placesIShot[y,x] == 1 or (self.summedPotentialShipLocations()[y,x] == 0):
                     continue
                     
-                #TODO: add check here whether this place is already shot at, or can be skipped for some other reason.
-                #if skippable:
-                #   continue
                 pref = self.exploreAction(opponent, x, y)
                 if pref > bestPref:
                     bestPref = pref
