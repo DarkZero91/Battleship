@@ -6,7 +6,7 @@ import copy
 
 class MinmaxAgent(Player):
     
-    def __init__(self, board, name, depth = 0, maxdepth, placeShips = True):
+    def __init__(self, board, name, depth = 0, maxdepth, placeShips=True):
         Player.__init__(self, board, name)
         self.depth = depth
         self.maxdepth = maxdepth
@@ -56,17 +56,23 @@ class MinmaxAgent(Player):
     def constructOpponentsBoard(self):
         mat = np.zeros_like(self.hitGrid)
         mat[self.hitGrid == -1] = 1
-        return self.mat
+        return mat
     
     def exploreAction(self, opponent, x, y):
 
         futureSelf = copy.deepcopy(self)
         futureSelf.depth += 1
         
-        futureOpponent = copy.deepcopy(opponent)
-        #TODO: give oppenent a board according to the intell I know
-        futureOpponent.board = self.constructOpponentsBoard()
-        futureOpponent.depth += 1
+        futureOpponent = MinmaxAgent(
+                self.constructOpponentsBoard(),
+                opponent.name,
+                depth=opponent.depth + 1,
+                self.maxdepth,
+                placeShips=False
+            )
+        futureOpponent.ships = self.herShipsIKnow
+        futureOpponent.herShipsIKnow = opponent.herShipsIKnow
+        futureOpponent.killLocations = opponent.killLocations
         
         result, kill = futureSelf.shoot(futureOpponent, x, y)
         if result == 1 and kill != "":
