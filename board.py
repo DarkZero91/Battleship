@@ -31,7 +31,10 @@ class Board:
         
     def getShot(self, x, y):
         val = self.grid[y, x]
-        self.grid[y, x] = -1
+        if val == 0:
+            self.grid[y, x] = -2 ## I got shot here, but there was nothing there
+        else:
+            self.grid[y, x] = -1 ## I got shot here, and some shippart was here
         return val
         
         

@@ -14,7 +14,7 @@ class MinmaxAgent(Player):
             self.placeShips()
         self.killedShips = []
         self.myShips = self.board.grid 
-        self.hitGrid = self.board.hitGrid
+        self.hitGrid = self.board.hitGrid  ##places I hit the opponent
         self.herShipsIKnow = np.zeros_like(self.myShips)
         
         self.potentialShipLocations = {}
@@ -43,6 +43,9 @@ class MinmaxAgent(Player):
 
         for y in xrange(size):
             for x in xrange(size):
+                if self.board.placesIShot[y,x] == 1 or (self.summedPotentialShipLocations()[y,x] == 0):
+                    continue
+                    
                 #TODO: add check here whether this place is already shot at, or can be skipped for some other reason.
                 #if skippable:
                 #   continue
@@ -126,6 +129,12 @@ class MinmaxAgent(Player):
             potMap[self.board.placesIShot == 1] = 0
             self.potentialShipLocations[name] = potMap
             
+    def summedPotentialShipLocations(self):
+        potMap = np.zeros_like(self.myShips)
+        for name in self.ships.keys():
+            potMap += self.potentialShipLocations[name]
+        return potMap
+     
     def bestGuess(self):
         potMap = np.zeros_like(self.myShips)
         for name in self.ships.keys():
