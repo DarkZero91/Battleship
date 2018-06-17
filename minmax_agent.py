@@ -57,7 +57,14 @@ class MinmaxAgent(Player):
     def constructOpponentsBoard(self):
         mat = np.zeros_like(self.hitGrid)
         mat[self.hitGrid == -1] = 1
-        return mat
+        
+        Board board(self.board.gridSize)
+        board.grid = self.herShipsIKnow.copy()
+        board.hitGrid = mat
+        board.placesIShot = np.zeros_like(board.grid)
+        board.placesIShot[self.board.grid < 0] = 1
+        
+        return board
     
     def exploreAction(self, opponent, x, y):
 
