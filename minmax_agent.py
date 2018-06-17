@@ -124,7 +124,6 @@ class MinmaxAgent(Player):
             
 
     def updatePotentialShipLocations(self):
-        #TODO skip if ship is killed
         for name in self.ships.keys():
             ship = self.ships[name]
             if self.killedShips.contains(ship)
@@ -143,7 +142,9 @@ class MinmaxAgent(Player):
             potMap += self.potentialShipLocations[name]
         return potMap
      
-    def bestGuess(self):
+    def bestGuess(self, opponent):
+        pref, x, y = self.exploreActions(opp)
+        
         potMap = np.zeros_like(self.myShips)
         for name in self.ships.keys():
             potMap += self.potentialShipLocations[name]
@@ -177,7 +178,7 @@ class MinmaxAgent(Player):
     def playRound(self, otherPlayer):
         self.updatePotentialShipLocations()
         self.updatePotentialKillMap()
-        x, y = self.bestGuess()
+        x, y = self.bestGuess(otherPlayer)
         if self.board.placesIShot[y, x] == 1:
             print self.name, "fires at random location"
             x = random.randint(0, self.board.gridSize - 1)
