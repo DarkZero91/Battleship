@@ -124,8 +124,11 @@ class MinmaxAgent(Player):
             
 
     def updatePotentialShipLocations(self):
+        #TODO skip if ship is killed
         for name in self.ships.keys():
             ship = self.ships[name]
+            if self.killedShips.contains(ship)
+                continue
             potMap = np.zeros_like(self.myShips)
             for mask in ship.masks:
                 result = cv2.filter2D(self.hitGrid, -1, mask)
