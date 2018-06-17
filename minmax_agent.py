@@ -144,7 +144,7 @@ class MinmaxAgent(Player):
      
     def bestGuess(self, opponent):
         pref, x, y = self.exploreActions(opp)
-        
+        return x, y
         potMap = np.zeros_like(self.myShips)
         for name in self.ships.keys():
             potMap += self.potentialShipLocations[name]
