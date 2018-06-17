@@ -1,11 +1,9 @@
 from player import Player
-from board import Board
 import numpy as np
 import cv2
 import random
 import copy
 
-#TODO: (add missing/required functions from BDIAgent class) xor (inheret from BDIAgent + add overloads) (first is probably nicest)
 class MinmaxAgent(Player):
     
     def __init__(self, board, name, depth = 0, maxdepth, placeShips = True):
@@ -25,24 +23,24 @@ class MinmaxAgent(Player):
         self.killLocations = {}
         self.potentialKillLocations = {}
         self.initKillLocations()
+
         
-        
-        
+
     def preference(self):
         #TODO: fix preference function
         boardPref = self.board.evaluate()
         #intelPref = np.sum(np.sum(placesTheOpponent knows I have a shippart there, 1))
-        
+
         return boardPref #+ intelPref
     
-    
-    
+
+
     def exploreActions(self, opponent):
         size = self.board.gridSize
         bestPref = -100
         bestX = 0
         bestY = 0
-        
+
         for y in xrange(size):
             for x in xrange(size):
                 #TODO: add check here whether this place is already shot at, or can be skipped for some other reason.
@@ -56,8 +54,9 @@ class MinmaxAgent(Player):
         return bestPref, bestX, bestY
     
     def constructOpponentsBoard(self):
-        #TODO construct opponents board given the intel I know
-    
+        mat = np.zeros_like(self.hitGrid)
+        mat[self.hitGrid == -1] = 1
+        return self.mat
     
     def exploreAction(self, opponent, x, y):
 
@@ -66,7 +65,7 @@ class MinmaxAgent(Player):
         
         futureOpponent = copy.deepcopy(opponent)
         #TODO: give oppenent a board according to the intell I know
-        #futureOpponent.board = self.constructOpponentsBoard()
+        futureOpponent.board = self.constructOpponentsBoard()
         futureOpponent.depth += 1
         
         result, kill = futureSelf.shoot(futureOpponent, x, y)
@@ -81,8 +80,8 @@ class MinmaxAgent(Player):
         else:
             except "Searchdepth above maxdepth: Fix your code dumbass!"
             
-            
-            
+
+
     def initKillLocations(self):
         for name in self.ships.keys():
             self.killLocations[name] = np.ones_like(self.hitGrid, dtype = np.int16) * -1
@@ -92,9 +91,9 @@ class MinmaxAgent(Player):
         self.killLocations[shipname][x,y] = 1
         self.killedShips.append(shipname)
         
-    
+
     def updatePotentialKillMap(self):
-        
+
         for name in self.ships.keys():
             if not name in self.killedShips:
                 potmap = np.zeros_like(self.hitGrid)
@@ -109,7 +108,7 @@ class MinmaxAgent(Player):
             else:
                 self.potentialKillLocations[name] = np.zeros_like(self.hitGrid)
             
-            
+
     def updatePotentialShipLocations(self):
         for name in self.ships.keys():
             ship = self.ships[name]
