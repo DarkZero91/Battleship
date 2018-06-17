@@ -5,7 +5,6 @@ import cv2
 import random
 import copy
 
-#TODO: (add missing/required functions from BDIAgent class) xor (inheret from BDIAgent + add overloads) (first is probably nicest)
 class MinmaxAgent(Player):
     
     def __init__(self, board, name, depth = 0, maxdepth, placeShips = True):
@@ -16,7 +15,7 @@ class MinmaxAgent(Player):
             self.placeShips()
         self.killedShips = []
         self.myShips = self.board.grid 
-        self.hitGrid = self.board.hitGrid
+        self.hitGrid = self.board.hitGrid  ##places I hit the opponent
         self.herShipsIKnow = np.zeros_like(self.myShips)
         
         self.potentialShipLocations = {}
