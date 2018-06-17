@@ -67,7 +67,8 @@ class MinmaxAgent(Player):
         return board
     
     def exploreAction(self, opponent, x, y):
-
+        if self.depth == self.maxdepth:
+            return self.preference()
         futureSelf = copy.deepcopy(self)
         futureSelf.depth += 1
         
@@ -86,9 +87,8 @@ class MinmaxAgent(Player):
         if result == 1 and kill != "":
             futureSelf.processKill(kill, x, y)
             
-        if self.depth == self.maxdepth:
-            return self.preference()
-        elif self.depth < self.maxdepth:
+        
+        if self.depth < self.maxdepth:
             otherpref, x, y = futureOpponent.exploreActions(futureSelf)
             return -1 * otherpref
         else:
