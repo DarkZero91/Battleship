@@ -8,11 +8,12 @@ import copy
 #TODO: (add missing/required functions from BDIAgent class) xor (inheret from BDIAgent + add overloads) (first is probably nicest)
 class MinmaxAgent(Player):
     
-    def __init__(self, board, name, depth = 0, maxdepth):
+    def __init__(self, board, name, depth = 0, maxdepth, placeShips = True):
         Player.__init__(self, board, name)
         self.depth = depth
         self.maxdepth = maxdepth
-        self.placeShips()
+        if placeShips:
+            self.placeShips()
         self.killedShips = []
         self.myShips = self.board.grid 
         self.hitGrid = self.board.hitGrid
