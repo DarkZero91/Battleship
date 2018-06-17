@@ -16,7 +16,7 @@ class MinmaxAgent(Player):
         self.myShips = self.board.grid 
         self.hitGrid = self.board.hitGrid  ##places I hit the opponent
         self.herShipsIKnow = np.zeros_like(self.myShips)
-        
+        self.myShipSheKnows = np.zeros_like(self.myShips)
         self.potentialShipLocations = {}
         self.updatePotentialShipLocations()
         
@@ -27,11 +27,11 @@ class MinmaxAgent(Player):
         
 
     def preference(self):
-        #TODO: fix preference function
+        
         boardPref = self.board.evaluate()
-        #intelPref = np.sum(np.sum(placesTheOpponent knows I have a shippart there, 1))
+        intelPref = np.sum(np.sum(myShipSheKnows, 1))
 
-        return boardPref #+ intelPref
+        return boardPref - intelPref
     
 
 
@@ -51,6 +51,7 @@ class MinmaxAgent(Player):
                     bestPref = pref
                     bestX = x
                     bestY = y
+        self.myShipSheKnows = opponent.herShipsIKnow
         return bestPref, bestX, bestY
     
     def constructOpponentsBoard(self):
