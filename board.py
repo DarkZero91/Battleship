@@ -31,7 +31,7 @@ class Board:
         
     def getShot(self, x, y):
         val = self.grid[y, x]
-        self.grid[y, x] = 0
+        self.grid[y, x] = -1
         return val
         
         
