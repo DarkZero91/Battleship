@@ -65,8 +65,9 @@
                 <br /><br />
                 The propositional statements are represented using a grid to encode its evaluation for coordinates corresponding to coordinates of the board. Often a 1 encodes that a statement is true for this location. A 0 encodes that there is no information regarding this statement, hence it doesn’t necessarily mean that the statement is false at this location.
                 <br /><br />
-First, let’s start laying down the basic propositional atoms and the believes Alice has about the game situation regarding a single point in time:
-                <br /><br />
+                First, let’s start laying down the basic propositional atoms and the believes Alice has about the game situation regarding a single point in time:
+                <br /><br/>
+                
                 <h4>Propositional Atoms</h4>
                 P: The locations on Bob’s board where is ship part is positioned.
                 <br /><br />
@@ -91,6 +92,7 @@ First, let’s start laying down the basic propositional atoms and the believes 
                 This is similar to H<sub>Bob</sub>, except that S<sub>Bob</sub>(x,y) will be considered true after a shot, regardless of whether a ship part of Alice was laying there. Also S<sub>Bob</sub> is considered common knowledge, both players are informed about the event and the outcome.
                 <br /><br />
                 S<sub>Alice</sub>: The positions where Alice shot at Bob. Since S<sub>Bob</sub> is common knowledge, S<sub>Alice</sub> is also common knowledge, hence known to Bob.
+                <br /><br/>
                 
                 <h4>Believes and Knowledge</h4>
                 For all propositions above (Y), except P^<sub>x</sub>, it also holds that K<sub>Bob</sub>(Y), since it is either his own board, or a proposition regarding common knowledge.
@@ -99,35 +101,37 @@ First, let’s start laying down the basic propositional atoms and the believes 
                 A<sub>x</sub>: for all Alice her ships x, A<sub>x</sub> indicates positions for each location whether a a part of x might be (in)directly adjacent to a place where Alice is already hit.
                 <br/><br/>
                 This is implemented using the information from H<sub>Bob</sub> (Places where Bob hit Alice). If Bob hit Alice at some location, all Alice her remaining ships are considered. If an near-adjacent tile of the hit location is within the range of the ship’s length, this near-adjacent tile is considered a possible location same ship which is already hit.
+                <br /><br/>
                 
                 <h4>Preference of State and Intentions</h4>
-                Each agent has a current state, which is are the total set of believes regarding the game in a single point in time. In each turn a agent has to perform an action, which is shooting at a arbitrary location on the opponents board, after which the agents state will be updated to a new one, including the newly gained information. <br/>
-                When Bob plays, he can reason about his options, what Alice might do afterwards, and what Bob could do after these options. After considering the resulting states, Bob has to act according to his intentions. <br/>
-              
-                For this BDI-agent, the intentions are defined by ending up in a state with the highest possible preference. This preference is defined by a function of a given state, which is as follows:  <br/>  <br/>
+                Each agent has a current state, which is are the total set of believes regarding the game in a single point in time. In each turn a agent has to perform an action, which is shooting at a arbitrary location on the opponents board, after which the agents state will be updated to a new one, including the newly gained information.
+                <br/><br/>
+                When Bob plays, he can reason about his options, what Alice might do afterwards, and what Bob could do after these options. After considering the resulting states, Bob has to act according to his intentions.
+                <br/><br/>
+                For this BDI-agent, the intentions are defined by ending up in a state with the highest possible preference. This preference is defined by a function of a given state, which is as follows:
+                <br/> <br/>
 <pre>
 Total ship parts hit + Total shipparts left – Total number of places of which the opponent knows a shiplocation of mine +random(-0.1, 0.1)  + Number of potential adjacent ship parts that might lay at the position shot at.
 </pre>
                 The random factor is used to disambiguate between states with the same preference. The random factor is too low to influence a choise, but causes a random choise out of the maximal candidates.
-                <br/><br/>
+                <br/><br />
+
                 <h4>Reasoning in time</h4>
                 When Bob reasons what Alice might do after Bob did a certain, Bob has to reason ‘for Alice’, given  what Bob knows what Alice knows. Since all believes, except for the believes each others board, are common knowledge, Bob can use most of its knowledge for reasoning for Alice. When Bob explores Alice her possible actions, Bob will act for Alice as if she only had the ship-parts on her board of which Bob is certain they are there.
                 <br/><br/>
-
                 When Bob reasons what actions he might perform, he will avoid shooting a location where he already shot at, also he will fire only at a location if he believes that it might contain a shippart of a ship he already hit. This latter strategy is used as a heuristic to prune the exploration tree, for more tractable computation. If this leaves no option for Bob, he will fire at a random location where he didn’t shoot at before.
                 <br/><br/>
-
                 Using this approach Bob can reason about future states, where he will choose a action according to his intention: choose an action such that you will probably end up in a state with the highest preference.
+                <br /><br/>
+                
                 <h4>Goals and Actions</h4>
                 Bob’s goal in the game is to hit all ship parts of Alice, while losing as little as possible shipparts from himself. Bob will try to reach this goal by acting according his intentions, which is to hit as many shipparts as possible, without revealing to much about his own ships. Bob decides on where to shoot using the following protocol:
                 <br/><br/>
-                Preferred action:<br/>
+                Preferred action:<br/><br/>
                 Bob will try to find an action according to his intention. If his possible actions, according to the heuristic, is an empty set, then Bob will fire randomly.
                 <br/><br/>
-                Random shot:<br/>
+                Random shot:<br/><br/>
                 If Bob fire’s randomly, he will fire at an arbitrary location at which he didn’t fire before. This way new knowledge can be gained for later exploration.
-                <br/><br/>
-                <br/><br/>
               </p>
             </div>
           </div>
