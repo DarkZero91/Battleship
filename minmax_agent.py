@@ -67,7 +67,7 @@ class MinmaxAgent(Player):
         grid[potmap != 0] = 1
         
         board = Board(self.board.gridSize)
-        board.grid = grid #self.herShipsIKnow.copy()
+        board.grid = self.herShipsIKnow.copy()
         board.hitGrid = mat
         board.placesIShot = np.zeros_like(board.grid)
         board.placesIShot[self.board.grid < 0] = 1
@@ -190,7 +190,7 @@ class MinmaxAgent(Player):
             potmap = potmap.astype(np.uint8)
             toshow = cv2.resize(self.myShips, (200,200), cv2.INTER_NEAREST)
             cv2.imshow(self.name + "'s grid", potmap)
-            cv2.waitKey(10)
+            cv2.waitKey(100)
     
     def playRound(self, otherPlayer):
         self.updatePotentialShipLocations()
