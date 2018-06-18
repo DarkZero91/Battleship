@@ -47,7 +47,7 @@
         <div class="col-lg-3">
           <h1 class="my-4">Content</h1>
           <div class="list-group">
-            <a href="#" class="list-group-item active">Battleship</a>
+            <a href="#" class="list-group-item active">The game</a>
             <a href="software_architecture.html" class="list-group-item">Software Architecture</a>
             <a href="logic.html" class="list-group-item">BDI Agent</a>
           </div>
@@ -78,7 +78,9 @@
                 <h5>Symmetric guesses:</h5>
                 If one of the players asks the other player a certain location to have a ship placed at it or not, the player himself needs to reveal if at his own board this location contains a ship as well.
 				By using this type of symmetry in the game, we can make use of common knowledge. Both the players now know that for instance at position x,y there is a ship at player one's board and no ship at player two's board.
-                
+                <br /><br />
+				<h5>New tactics:</h5>
+				Because we now make use of this symmetric guesses, there emerges a new tactic for the BDI-player. It has to say, by the new symmetry, what is placed at his own board at the location that the player is attacking. You don’t want to give away knowledge about your own ship locations, so it is not smart to make an attack at these coordinates. The new tactic could be to guess all kind of coordinates, except for the ones where you have ships as well.
               </p>
             </div>
           </div>
