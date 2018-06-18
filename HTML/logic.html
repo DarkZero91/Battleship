@@ -73,10 +73,10 @@
                 <br /><br />
                 P^: The locations on Alice her board where a ship part is positioned.
                 <br /><br />
-                P(s<sub>s</sub>: for all ships x, P(s<sub>s</sub> indicates the positions where x is located on Bob’s board. 
+                P<sub>s</sub>: for all ships x, P<sub>s</sub> indicates the positions where x is located on Bob’s board. 
                 E.g, for Bob his Destroyer, we have P<sub>Destroyer</sub>, denoting for each location whether a part of this Destroyer is located there.
                 <br /><br />
-                P^(s<sub>s</sub>: Similar as P(s<sub>s</sub>, except it indicates the ship positions of Alice instead of Bob.
+                P^<sub>s</sub>: Similar as P<sub>s</sub>, except it indicates the ship positions of Alice instead of Bob.
                 <br /><br />
                 
                 H<sub>Bob</sub>: The positions where Bob hit a part of Alice her ships.
@@ -101,7 +101,7 @@
                 K<sub>Bob</sub>(P^) is true in a position if this location is either hit, after which it became known that a ship part was located there, or if Alice told Bob, due to the symmetric game communication.
                 Once Alice is hit by Bob at a position (x,y), Bob can reason about possible adjacent tiles where more parts of that ship could be.
                 <br/><br/>
-                A(s<sub>s</sub>: for all Alice her ships x, A(s<sub>s</sub> indicates positions for each location whether a a part of x might be (in)directly adjacent to a place where Alice is already hit.
+                A<sub>s</sub>: for all Alice her ships x, A<sub>s</sub> indicates positions for each location whether a a part of x might be (in)directly adjacent to a place where Alice is already hit.
                 <br/><br/>
                 This is implemented using the information from H<sub>Bob</sub> (Places where Bob hit Alice). If Bob hit Alice at some location, all Alice her remaining ships are considered. If an near-adjacent tile of the hit location is within the range of the ship’s length, this near-adjacent tile is considered a possible location same ship which is already hit.
                 <br /><br/>
