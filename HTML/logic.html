@@ -109,6 +109,7 @@ First, let’s start laying down the basic propositional atoms and the believes 
 Total ship parts hit + Total shipparts left – Total number of places of which the opponent knows a shiplocation of mine +random(-0.1, 0.1)  + Number of potential adjacent ship parts that might lay at the position shot at.
 </pre>
                 The random factor is used to disambiguate between states with the same preference. The random factor is too low to influence a choise, but causes a random choise out of the maximal candidates.
+                <br/><br/>
                 <h4>Reasoning in time</h4>
                 When Bob reasons what Alice might do after Bob did a certain, Bob has to reason ‘for Alice’, given  what Bob knows what Alice knows. Since all believes, except for the believes each others board, are common knowledge, Bob can use most of its knowledge for reasoning for Alice. When Bob explores Alice her possible actions, Bob will act for Alice as if she only had the ship-parts on her board of which Bob is certain they are there.
                 <br/><br/>
