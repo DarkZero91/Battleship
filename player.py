@@ -6,7 +6,7 @@ class Player:
     def __init__(self, board, name):
         self.board = board
         self.name = name
-        self.ships = {"Carrier" : Carrier(), "Battleship" : Battleship(), "Cruiser" : Cruiser(),"Submarine" : Submarine(),"Destroyer" : Destroyer()}
+        self.ships = {"Carrier" : Carrier(), "Battleship1" : Battleship(), "Battleship2" : Battleship(), "Cruiser" : Cruiser(),"Submarine1" : Submarine(),"Submarine2" : Submarine(),"Destroyer1" : Destroyer(),"Destroyer2" : Destroyer(), "Destroyer3" : Destroyer(), "Destroye4" : Destroyer()}
         self.shipsLeft = len(self.ships.keys())
     
     def placeShips(self):
