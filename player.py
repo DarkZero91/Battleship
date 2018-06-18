@@ -1,13 +1,10 @@
-from board import Board
 from ships import *
 import random
 
+
 class Player:
-    
     def __init__(self, board, name):
         self.board = board
-        
-
         self.name = name
         self.ships = {"Carrier" : Carrier(), "Battleship" : Battleship(), "Cruiser" : Cruiser(),"Submarine" : Submarine(),"Destroyer" : Destroyer()}
         self.shipsLeft = len(self.ships.keys())
@@ -30,6 +27,7 @@ class Player:
                 if fits:
                     ship.place(x, y, orientation, self.board, nonce)
                     nonce += 1
+
     def alive(self):
         return self.shipsLeft != 0
                     
@@ -49,8 +47,7 @@ class Player:
                     print self.name, name, "killed.."
             return 1, killed
         return 0, killed
-    
-    
+
     def shoot(self, player, x, y):
         result, killed = player.getShot(x,y)
         self.board.processShot(x,y, result)
@@ -61,4 +58,3 @@ class Player:
         #else:
         #    print "HIT!"
         return result, killed
-            

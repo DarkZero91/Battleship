@@ -1,7 +1,7 @@
 import numpy as np
 
+
 class Board:
-    
     def __init__(self, gridsize):
         self.gridSize = gridsize
         self.grid = np.zeros((self.gridSize,self.gridSize), dtype = np.int16)
@@ -36,7 +36,6 @@ class Board:
         else:
             self.grid[y, x] = -1 ## I got shot here, and some shippart was here
         return val
-        
         
     def collides(self, x, y, size, orientation):
         if orientation == 'h':
