@@ -41,7 +41,7 @@ class MinmaxAgent(Player):
                 if self.board.placesIShot[y,x] == 1 or (self.summedPotentialShipLocations()[y,x] == 0):
                     continue
                 #print "explore", x, y, "@depth ", self.depth
-                pref = self.exploreAction(opponent, x, y) + self.summedPotentialShipLocations()[y,x]
+                pref = self.exploreAction(opponent, x, y) #
                 if pref > bestPref:
                     madeChoice = True
                     bestPref = pref
@@ -49,6 +49,7 @@ class MinmaxAgent(Player):
                     bestY = y
         if not madeChoice:
             bestPref = random.uniform(-0.1, 0.1)
+            bestPref = self.preference()
         self.myShipSheKnows = opponent.herShipsIKnow
         return bestPref, bestX, bestY
     
@@ -79,7 +80,7 @@ class MinmaxAgent(Player):
         #print "depth = ", self.depth, "max = ", self.maxdepth
 
         if self.depth == self.maxdepth:
-            return self.preference()
+            return self.preference()  #+ self.summedPotentialShipLocations()[y,x]
         futureSelf = copy.deepcopy(self)
         futureSelf.depth += 1
         futureSelf.name = "future_" + self.name
