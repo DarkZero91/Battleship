@@ -72,33 +72,33 @@ First, let’s start laying down the basic propositional atoms and the believes 
                 <br /><br />
                 P^: The locations on Alice her board where a ship part is positioned.
                 <br /><br />
-                P_x: for all ships x, P_x indicates the positions where x is located on Bob’s board. 
+                P<sub>x</sub>: for all ships x, P_x indicates the positions where x is located on Bob’s board. 
                 E.g, for Bob his Destroyer, we have P_Destroyer, denoting for each location whether a part of this Destroyer is located there.
                 <br /><br />
-                P^_x: Similar as P_x, except it indicates the ship positions of Alice instead of Bob.
+                P^<sub>x</sub>: Similar as P_x, except it indicates the ship positions of Alice instead of Bob.
                 <br /><br />
-                Alive_Bob(x): For all ships x from Bob, Alive_Bob(x) denotes whether Bob’s ships x is still alive. This is common knowledge, since both players know in the beginning which ships both players start out with, at which point all ships are ‘alive’. When a certain ship from Bob is killed, this is known to Bob, and after announcement also to Alice.
+                Alive<sub>Bob</sub>(x): For all ships x from Bob, Alive_Bob(x) denotes whether Bob’s ships x is still alive. This is common knowledge, since both players know in the beginning which ships both players start out with, at which point all ships are ‘alive’. When a certain ship from Bob is killed, this is known to Bob, and after announcement also to Alice.
                 <br /><br />
-                Alive_Alice(x): Same as Alive_Bob, but regarding Alice her ships.
+                Alive<sub>Alice</sub>(x): Same as Alive_Bob, but regarding Alice her ships.
                 <br /><br />
-                H_Bob: The positions where Bob hit a part of Alice her ships.
-                E.g, if Bob shot Alice at a position (x,y), after which Alice says he hit something, H_Bob(x,y) will become true. 
-                H_Bob will be considered ‘common knowledge’, since once a ship is hit, both Alice and Bob will know this.
+                H<sub>Bob</sub>: The positions where Bob hit a part of Alice her ships.
+                E.g, if Bob shot Alice at a position (x,y), after which Alice says he hit something, H<sub>Bob</sub>(x,y) will become true. 
+                H<sub>Bob</sub> will be considered ‘common knowledge’, since once a ship is hit, both Alice and Bob will know this.
                 <br /><br />
-                H_Alice: Since H_Bob is common knowledge, H_Alice is also common knowledge, hence known to Bob.
+                H<sub>Alice</sub>: Since H<sub>Bob</sub> is common knowledge, H<sub>Alice</sub> is also common knowledge, hence known to Bob.
                 <br /><br />
-                S_Bob: The positions where Bob shot at Alice.
-                This is similar to H_Bob, except that S_Bob(x,y) will be considered true after a shot, regardless of whether a ship part of Alice was laying there. Also S_Bob is considered common knowledge, both players are informed about the event and the outcome.
+                S<sub>Bob</sub>: The positions where Bob shot at Alice.
+                This is similar to H<sub>Bob</sub>, except that S_Bob(x,y) will be considered true after a shot, regardless of whether a ship part of Alice was laying there. Also S<sub>Bob</sub> is considered common knowledge, both players are informed about the event and the outcome.
                 <br /><br />
-                S_Alice: The positions where Alice shot at Bob. Since S_Bob is common knowledge, S_Alice is also common knowledge, hence known to Bob.
+                S<sub>Alice</sub>: The positions where Alice shot at Bob. Since S<sub>Bob</sub> is common knowledge, S<sub>Alice</sub> is also common knowledge, hence known to Bob.
                 
                 <h4>Believes and Knowledge</h4>
-                For all propositions above (Y), except P^_x, it also holds that K_Bob(Y), since it is either his own board, or a proposition regarding common knowledge.
+                For all propositions above (Y), except P^<sub>x</sub>, it also holds that K<sub>Bob</sub>(Y), since it is either his own board, or a proposition regarding common knowledge.
                 Once Alice is hit by Bob at a position (x,y), Bob can reason about possible adjacent tiles where more parts of that ship could be.
                 <br/><br/>
-                A_x: for all Alice her ships x, A_x indicates positions for each location whether a a part of x might be (in)directly adjacent to a place where Alice is already hit.
+                A<sub>x</sub>: for all Alice her ships x, A<sub>x</sub> indicates positions for each location whether a a part of x might be (in)directly adjacent to a place where Alice is already hit.
                 <br/><br/>
-                This is implemented using the information from H_Bob (Places where Bob hit Alice). If Bob hit Alice at some location, all Alice her remaining ships are considered. If an near-adjacent tile of the hit location is within the range of the ship’s length, this near-adjacent tile is considered a possible location same ship which is already hit.
+                This is implemented using the information from H<sub>Bob</sub> (Places where Bob hit Alice). If Bob hit Alice at some location, all Alice her remaining ships are considered. If an near-adjacent tile of the hit location is within the range of the ship’s length, this near-adjacent tile is considered a possible location same ship which is already hit.
                 
                 <h4>Preference of State and Intentions</h4>
                 Each agent has a current state, which is are the total set of believes regarding the game in a single point in time. In each turn a agent has to perform an action, which is shooting at a arbitrary location on the opponents board, after which the agents state will be updated to a new one, including the newly gained information. <br/>
