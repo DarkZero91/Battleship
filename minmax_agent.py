@@ -177,7 +177,7 @@ class MinmaxAgent(Player):
             h, w = potmap.shape
             potmap = np.reshape(potmap, (h,w,1))
             potmap = potmap.astype(np.uint8)
-            toshow = cv2.resize(self.myShips, (200,200), cv2.INTER_NEAREST)
+            potmap = cv2.resize(potmap, (400, 400),interpolation=cv2.INTER_NEAREST)
             cv2.imshow(self.name + "'s grid", potmap)
             cv2.waitKey(100)
     
