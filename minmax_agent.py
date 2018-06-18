@@ -24,6 +24,7 @@ class MinmaxAgent(Player):
         self.killLocations = {}
         self.potentialKillLocations = {}
         self.initKillLocations()
+        self.frameid = 0
 
     def preference(self):
         boardPref = self.board.evaluate()
@@ -184,13 +185,14 @@ class MinmaxAgent(Player):
             potmap[potmap == -1] = 80
             potmap[potmap == -2] = 0
             
-            
+            self.frameid += 1
             h, w = potmap.shape
             potmap = np.reshape(potmap, (h,w,1))
             potmap = potmap.astype(np.uint8)
             potmap = cv2.resize(potmap, (400, 400),interpolation=cv2.INTER_NEAREST)
             cv2.imshow(self.name + "'s grid", potmap)
-            cv2.waitKey(100)
+            cv2.imwrite('output/' + self.name + "/" + str(self.frameid)+".png", potmap)
+            cv2.waitKey(20)
     
     def playRound(self, otherPlayer):
         self.updatePotentialShipLocations()
