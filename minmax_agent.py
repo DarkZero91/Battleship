@@ -48,20 +48,20 @@ class MinmaxAgent(Player):
                     bestX = x
                     bestY = y
         if not madeChoice:
-            bestPref = 0
+            bestPref = random.uniform(-0.1, 0.1)
         self.myShipSheKnows = opponent.herShipsIKnow
         return bestPref, bestX, bestY
     
     def constructOpponentsBoard(self):
         mat = np.zeros_like(self.hitGrid)
-        mat[self.hitGrid == -1] = 1
+        mat[self.board.grid == -1] = 1
         
         grid = np.zeros_like(self.board.grid)
         potmap = self.summedPotentialShipLocations() #HACK
         grid[potmap != 0] = 1
         
         board = Board(self.board.gridSize)
-        board.grid = grid#self.herShipsIKnow.copy()
+        board.grid = grid #self.herShipsIKnow.copy()
         board.hitGrid = mat
         board.placesIShot = np.zeros_like(board.grid)
         board.placesIShot[self.board.grid < 0] = 1
@@ -78,7 +78,7 @@ class MinmaxAgent(Player):
         futureSelf.name = "future_" + self.name
         
         futureOpponent = MinmaxAgent(
-                copy.deepcopy(opponent.board),#self.constructOpponentsBoard(),  #HACK
+                self.constructOpponentsBoard(),  
                 "future_" + opponent.name,
                 depth=opponent.depth + 1,
                 maxdepth = self.maxdepth,
