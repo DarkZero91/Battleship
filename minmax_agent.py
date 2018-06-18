@@ -41,7 +41,7 @@ class MinmaxAgent(Player):
                 if self.board.placesIShot[y,x] == 1 or (self.summedPotentialShipLocations()[y,x] == 0):
                     continue
                 #print "explore", x, y, "@depth ", self.depth
-                pref = self.exploreAction(opponent, x, y)
+                pref = self.exploreAction(opponent, x, y) + self.summedPotentialShipLocations()[y,x]
                 if pref > bestPref:
                     madeChoice = True
                     bestPref = pref
