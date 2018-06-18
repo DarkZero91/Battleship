@@ -3,10 +3,11 @@ import numpy as np
 import cv2
 import random
 import copy
+from board import Board
 
 class MinmaxAgent(Player):
     
-    def __init__(self, board, name, depth = 0, maxdepth, placeShips=True):
+    def __init__(self, board, name, depth = 0, maxdepth = 3, placeShips=True):
         Player.__init__(self, board, name)
         self.depth = depth
         self.maxdepth = maxdepth
@@ -29,9 +30,9 @@ class MinmaxAgent(Player):
     def preference(self):
         
         boardPref = self.board.evaluate()
-        intelPref = np.sum(np.sum(myShipSheKnows, 1))
+        intelPref = np.sum(np.sum(self.myShipSheKnows, 1))
 
-        return boardPref - intelPref
+        return boardPref - intelPref + random.uniform(-0.5, 0.5)
     
 
 
@@ -40,12 +41,11 @@ class MinmaxAgent(Player):
         bestPref = -100
         bestX = 0
         bestY = 0
-
         for y in xrange(size):
             for x in xrange(size):
                 if self.board.placesIShot[y,x] == 1 or (self.summedPotentialShipLocations()[y,x] == 0):
                     continue
-                    
+                #print "explore", x, y, "@depth ", self.depth
                 pref = self.exploreAction(opponent, x, y)
                 if pref > bestPref:
                     bestPref = pref
@@ -58,7 +58,7 @@ class MinmaxAgent(Player):
         mat = np.zeros_like(self.hitGrid)
         mat[self.hitGrid == -1] = 1
         
-        Board board(self.board.gridSize)
+        board = Board(self.board.gridSize)
         board.grid = self.herShipsIKnow.copy()
         board.hitGrid = mat
         board.placesIShot = np.zeros_like(board.grid)
@@ -67,19 +67,22 @@ class MinmaxAgent(Player):
         return board
     
     def exploreAction(self, opponent, x, y):
+        #print "depth = ", self.depth, "max = ", self.maxdepth
+
         if self.depth == self.maxdepth:
             return self.preference()
         futureSelf = copy.deepcopy(self)
         futureSelf.depth += 1
+        futureSelf.name = "future_" + self.name
         
         futureOpponent = MinmaxAgent(
-                self.constructOpponentsBoard(),
-                opponent.name,
+                opponent.board,#self.constructOpponentsBoard(),  #HACK
+                "future_" + opponent.name,
                 depth=opponent.depth + 1,
-                self.maxdepth,
+                maxdepth = self.maxdepth,
                 placeShips=False
             )
-        futureOpponent.ships = self.herShipsIKnow
+        futureOpponent.ships = opponent.ships#self.herShipsIKnow
         futureOpponent.herShipsIKnow = opponent.herShipsIKnow
         futureOpponent.killLocations = opponent.killLocations
         
@@ -90,9 +93,10 @@ class MinmaxAgent(Player):
         
         if self.depth < self.maxdepth:
             otherpref, x, y = futureOpponent.exploreActions(futureSelf)
+            #print "deeper"
             return -1 * otherpref
         else:
-            except "Searchdepth above maxdepth: Fix your code dumbass!"
+            raise "Searchdepth above maxdepth: Fix your code dumbass!"
             
 
 
@@ -126,7 +130,7 @@ class MinmaxAgent(Player):
     def updatePotentialShipLocations(self):
         for name in self.ships.keys():
             ship = self.ships[name]
-            if self.killedShips.contains(ship)
+            if ship in self.killedShips:
                 continue
             potMap = np.zeros_like(self.myShips)
             for mask in ship.masks:
@@ -142,8 +146,10 @@ class MinmaxAgent(Player):
             potMap += self.potentialShipLocations[name]
         return potMap
      
-    def bestGuess(self, opponent):
+    def bestGuess(self, opp):
         pref, x, y = self.exploreActions(opp)
+        if self.depth == 0:
+            print self.name + " fires at", x, y, "with pref", pref
         return x, y
         potMap = np.zeros_like(self.myShips)
         for name in self.ships.keys():
@@ -163,17 +169,20 @@ class MinmaxAgent(Player):
         return x, y
     
     def visualize(self):
-        if self.name == "Bob":
-            potmap = self.potentialKillLocations["Battleship"].copy()
-            potmap[potmap == 0] = 0
-            potmap[potmap == -1] = 0
-            potmap[potmap == 1] = 255
+        if self.name == "Bob" or self.name == "Alice":
+            potmap = self.board.grid.copy()
+            potmap[potmap > 0 ] = 255
+            potmap[potmap == 0 ] = 125
+            potmap[potmap == -1] = 80
+            potmap[potmap == -2] = 0
+            
+            
             h, w = potmap.shape
             potmap = np.reshape(potmap, (h,w,1))
             potmap = potmap.astype(np.uint8)
-            toshow = cv2.resize(self.myShips, (100,100), cv2.INTER_NEAREST)
-            cv2.imshow("bob potKillMap", potmap)
-            cv2.waitKey(1000)
+            toshow = cv2.resize(self.myShips, (200,200), cv2.INTER_NEAREST)
+            cv2.imshow(self.name + "'s grid", potmap)
+            cv2.waitKey(10)
     
     def playRound(self, otherPlayer):
         self.updatePotentialShipLocations()

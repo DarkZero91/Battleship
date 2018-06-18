@@ -1,6 +1,7 @@
 import numpy as np
 
 from bdi_agent import BDIAgent
+from minmax_agent import MinmaxAgent
 from board import Board
 class Game:
     
@@ -9,8 +10,8 @@ class Game:
         self.p1Board = Board(self.gridSize)
         self.p2Board = Board(self.gridSize)
         
-        self.player1 = BDIAgent(self.p1Board, "Alice")
-        self.player2 = BDIAgent(self.p2Board, "Bob")
+        self.player1 = MinmaxAgent(self.p1Board, "Alice",0,3)
+        self.player2 = MinmaxAgent(self.p2Board, "Bob",0,3)
         
     
     def playRound(self):

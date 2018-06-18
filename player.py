@@ -37,7 +37,7 @@ class Player:
         uid = self.board.getShot(x, y)
         killed = ""
         if uid != 0:
-            for name in self.ships:
+            for name in self.ships.keys():
                 ship = self.ships[name]
                 if ship.uid != uid:
                     continue
@@ -45,7 +45,8 @@ class Player:
                 if not alive:
                    killed = name
                    self.shipsLeft -= 1
-                   print self.name, name, "killed.."
+                   if not "future_" in self.name:
+                    print self.name, name, "killed.."
             return 1, killed
         return 0, killed
     
