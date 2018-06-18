@@ -72,14 +72,14 @@ First, let’s start laying down the basic propositional atoms and the believes 
                 <br /><br />
                 P^: The locations on Alice her board where a ship part is positioned.
                 <br /><br />
-                P<sub>x</sub>: for all ships x, P_x indicates the positions where x is located on Bob’s board. 
-                E.g, for Bob his Destroyer, we have P_Destroyer, denoting for each location whether a part of this Destroyer is located there.
+                P<sub>x</sub>: for all ships x, P<sub>x</sub> indicates the positions where x is located on Bob’s board. 
+                E.g, for Bob his Destroyer, we have P<sub>Destroyer</sub>, denoting for each location whether a part of this Destroyer is located there.
                 <br /><br />
-                P^<sub>x</sub>: Similar as P_x, except it indicates the ship positions of Alice instead of Bob.
+                P^<sub>x</sub>: Similar as P<sub>x</sub>, except it indicates the ship positions of Alice instead of Bob.
                 <br /><br />
-                Alive<sub>Bob</sub>(x): For all ships x from Bob, Alive_Bob(x) denotes whether Bob’s ships x is still alive. This is common knowledge, since both players know in the beginning which ships both players start out with, at which point all ships are ‘alive’. When a certain ship from Bob is killed, this is known to Bob, and after announcement also to Alice.
+                Alive<sub>Bob</sub>(x): For all ships x from Bob, Alive<sub>Bob</sub>(x) denotes whether Bob’s ships x is still alive. This is common knowledge, since both players know in the beginning which ships both players start out with, at which point all ships are ‘alive’. When a certain ship from Bob is killed, this is known to Bob, and after announcement also to Alice.
                 <br /><br />
-                Alive<sub>Alice</sub>(x): Same as Alive_Bob, but regarding Alice her ships.
+                Alive<sub>Alice</sub>(x): Same as Alive<sub>Bob</sub>, but regarding Alice her ships.
                 <br /><br />
                 H<sub>Bob</sub>: The positions where Bob hit a part of Alice her ships.
                 E.g, if Bob shot Alice at a position (x,y), after which Alice says he hit something, H<sub>Bob</sub>(x,y) will become true. 
@@ -88,7 +88,7 @@ First, let’s start laying down the basic propositional atoms and the believes 
                 H<sub>Alice</sub>: Since H<sub>Bob</sub> is common knowledge, H<sub>Alice</sub> is also common knowledge, hence known to Bob.
                 <br /><br />
                 S<sub>Bob</sub>: The positions where Bob shot at Alice.
-                This is similar to H<sub>Bob</sub>, except that S_Bob(x,y) will be considered true after a shot, regardless of whether a ship part of Alice was laying there. Also S<sub>Bob</sub> is considered common knowledge, both players are informed about the event and the outcome.
+                This is similar to H<sub>Bob</sub>, except that S<sub>Bob</sub>(x,y) will be considered true after a shot, regardless of whether a ship part of Alice was laying there. Also S<sub>Bob</sub> is considered common knowledge, both players are informed about the event and the outcome.
                 <br /><br />
                 S<sub>Alice</sub>: The positions where Alice shot at Bob. Since S<sub>Bob</sub> is common knowledge, S<sub>Alice</sub> is also common knowledge, hence known to Bob.
                 

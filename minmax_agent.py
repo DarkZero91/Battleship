@@ -80,7 +80,7 @@ class MinmaxAgent(Player):
         #print "depth = ", self.depth, "max = ", self.maxdepth
 
         if self.depth == self.maxdepth:
-            return self.preference()  #+ self.summedPotentialShipLocations()[y,x]
+            return self.preference()  + self.summedPotentialShipLocations()[y,x]
         futureSelf = copy.deepcopy(self)
         futureSelf.depth += 1
         futureSelf.name = "future_" + self.name
