@@ -48,8 +48,8 @@ class MinmaxAgent(Player):
                     bestX = x
                     bestY = y
         if not madeChoice:
-            bestPref = random.uniform(-0.1, 0.1)
-            bestPref = self.preference()
+            
+            bestPref = self.preference() + random.uniform(-0.1, 0.1)
         self.myShipSheKnows = opponent.herShipsIKnow
         return bestPref, bestX, bestY
     
