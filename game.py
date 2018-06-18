@@ -9,8 +9,8 @@ class Game:
         self.p1Board = Board(self.gridSize)
         self.p2Board = Board(self.gridSize)
         
-        self.player1 = MinmaxAgent(self.p1Board, "Alice",0,3)
-        self.player2 = MinmaxAgent(self.p2Board, "Bob",0,3)
+        self.player1 = MinmaxAgent(self.p1Board, "Alice",0,2)
+        self.player2 = MinmaxAgent(self.p2Board, "Bob",0,2)
         
     def playRound(self):
         done = False

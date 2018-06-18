@@ -7,7 +7,7 @@ from board import Board
 
 
 class MinmaxAgent(Player):
-    def __init__(self, board, name, depth = 0, maxdepth = 3, placeShips=True):
+    def __init__(self, board, name, depth = 0, maxdepth = 2, placeShips=True):
         Player.__init__(self, board, name)
         self.depth = depth
         self.maxdepth = maxdepth
@@ -42,15 +42,15 @@ class MinmaxAgent(Player):
                 if self.board.placesIShot[y,x] == 1 or (self.summedPotentialShipLocations()[y,x] == 0):
                     continue
                 #print "explore", x, y, "@depth ", self.depth
-                pref = self.exploreAction(opponent, x, y) #
+                pref = self.exploreAction(opponent, x, y) + self.summedPotentialShipLocations()[y,x]
                 if pref > bestPref:
                     madeChoice = True
                     bestPref = pref
                     bestX = x
                     bestY = y
         if not madeChoice:
-            
-            bestPref = self.preference() + random.uniform(-0.1, 0.1)
+            print self.name + 'no_choice'
+            bestPref = self.preference()#0#random.uniform(-0.1, 0.1) #self.preference() + 
         self.myShipSheKnows = opponent.herShipsIKnow
         return bestPref, bestX, bestY
     
@@ -81,7 +81,7 @@ class MinmaxAgent(Player):
         #print "depth = ", self.depth, "max = ", self.maxdepth
 
         if self.depth == self.maxdepth:
-            return self.preference()  + self.summedPotentialShipLocations()[y,x]
+            return self.preference()  
         futureSelf = copy.deepcopy(self)
         futureSelf.depth += 1
         futureSelf.name = "future_" + self.name
