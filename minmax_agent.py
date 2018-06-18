@@ -32,13 +32,14 @@ class MinmaxAgent(Player):
         boardPref = self.board.evaluate()
         intelPref = np.sum(np.sum(self.myShipSheKnows, 1))
 
-        return boardPref - intelPref + random.uniform(-0.5, 0.5)
+        return boardPref - intelPref + random.uniform(-0.1, 0.1)
     
 
 
     def exploreActions(self, opponent):
         size = self.board.gridSize
-        bestPref = -100
+        madeChoice = False
+        bestPref = -1000
         bestX = 0
         bestY = 0
         for y in xrange(size):
@@ -48,9 +49,12 @@ class MinmaxAgent(Player):
                 #print "explore", x, y, "@depth ", self.depth
                 pref = self.exploreAction(opponent, x, y)
                 if pref > bestPref:
+                    madeChoice = True
                     bestPref = pref
                     bestX = x
                     bestY = y
+        if not madeChoice:
+            bestPref = 0
         self.myShipSheKnows = opponent.herShipsIKnow
         return bestPref, bestX, bestY
     
@@ -58,8 +62,12 @@ class MinmaxAgent(Player):
         mat = np.zeros_like(self.hitGrid)
         mat[self.hitGrid == -1] = 1
         
+        grid = np.zeros_like(self.board.grid)
+        potmap = self.summedPotentialShipLocations() #HACK
+        grid[potmap != 0] = 1
+        
         board = Board(self.board.gridSize)
-        board.grid = self.herShipsIKnow.copy()
+        board.grid = grid#self.herShipsIKnow.copy()
         board.hitGrid = mat
         board.placesIShot = np.zeros_like(board.grid)
         board.placesIShot[self.board.grid < 0] = 1
@@ -76,16 +84,16 @@ class MinmaxAgent(Player):
         futureSelf.name = "future_" + self.name
         
         futureOpponent = MinmaxAgent(
-                opponent.board,#self.constructOpponentsBoard(),  #HACK
+                copy.deepcopy(opponent.board),#self.constructOpponentsBoard(),  #HACK
                 "future_" + opponent.name,
                 depth=opponent.depth + 1,
                 maxdepth = self.maxdepth,
                 placeShips=False
             )
-        futureOpponent.ships = opponent.ships#self.herShipsIKnow
-        futureOpponent.herShipsIKnow = opponent.herShipsIKnow
-        futureOpponent.killLocations = opponent.killLocations
-        
+        futureOpponent.ships = opponent.ships.copy()#self.herShipsIKnow
+        futureOpponent.herShipsIKnow = opponent.herShipsIKnow.copy()
+        futureOpponent.killLocations = opponent.killLocations.copy()
+        futureOpponent.updatePotentialShipLocations()
         result, kill = futureSelf.shoot(futureOpponent, x, y)
         if result == 1 and kill != "":
             futureSelf.processKill(kill, x, y)
