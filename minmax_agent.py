@@ -52,6 +52,13 @@ class MinmaxAgent(Player):
         self.myShipSheKnows = opponent.herShipsIKnow
         return bestPref, bestX, bestY
     
+    def summedKillLocations(self):
+        summed = np.zeros_like(self.board.grid)
+        for kill in self.killLocations:
+            summed += killed
+        summed[summed > 0] = 1
+        return summed
+    
     def constructOpponentsBoard(self):
         mat = np.zeros_like(self.hitGrid)
         mat[self.board.grid == -1] = 1
@@ -101,6 +108,7 @@ class MinmaxAgent(Player):
             
     def initKillLocations(self):
         for name in self.ships.keys():
+
             self.killLocations[name] = np.ones_like(self.hitGrid, dtype = np.int16) * -1
             self.potentialKillLocations[name] = np.ones_like(self.hitGrid, dtype = np.int16) * -1
             
@@ -125,13 +133,15 @@ class MinmaxAgent(Player):
                 self.potentialKillLocations[name] = np.zeros_like(self.hitGrid)
             
     def updatePotentialShipLocations(self):
+        checkGrid = self.hitGrid.copy()
+        checkGrid[self.summedKillLocations == 1] = 0
         for name in self.ships.keys():
             ship = self.ships[name]
             if ship in self.killedShips:
                 continue
             potMap = np.zeros_like(self.myShips)
             for mask in ship.masks:
-                result = cv2.filter2D(self.hitGrid, -1, mask)
+                result = cv2.filter2D(checkGrid, -1, mask)
                 potMap += result
             potMap[potMap != 0] = 1
             potMap[self.board.placesIShot == 1] = 0
