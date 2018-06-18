@@ -5,8 +5,8 @@ import random
 import copy
 from board import Board
 
+
 class MinmaxAgent(Player):
-    
     def __init__(self, board, name, depth = 0, maxdepth = 3, placeShips=True):
         Player.__init__(self, board, name)
         self.depth = depth
@@ -25,16 +25,10 @@ class MinmaxAgent(Player):
         self.potentialKillLocations = {}
         self.initKillLocations()
 
-        
-
     def preference(self):
-        
         boardPref = self.board.evaluate()
         intelPref = np.sum(np.sum(self.myShipSheKnows, 1))
-
         return boardPref - intelPref + random.uniform(-0.1, 0.1)
-    
-
 
     def exploreActions(self, opponent):
         size = self.board.gridSize
@@ -98,7 +92,6 @@ class MinmaxAgent(Player):
         if result == 1 and kill != "":
             futureSelf.processKill(kill, x, y)
             
-        
         if self.depth < self.maxdepth:
             otherpref, x, y = futureOpponent.exploreActions(futureSelf)
             #print "deeper"
@@ -106,8 +99,6 @@ class MinmaxAgent(Player):
         else:
             raise "Searchdepth above maxdepth: Fix your code dumbass!"
             
-
-
     def initKillLocations(self):
         for name in self.ships.keys():
             self.killLocations[name] = np.ones_like(self.hitGrid, dtype = np.int16) * -1
@@ -117,7 +108,6 @@ class MinmaxAgent(Player):
         self.killLocations[shipname][x,y] = 1
         self.killedShips.append(shipname)
         
-
     def updatePotentialKillMap(self):
 
         for name in self.ships.keys():
@@ -134,7 +124,6 @@ class MinmaxAgent(Player):
             else:
                 self.potentialKillLocations[name] = np.zeros_like(self.hitGrid)
             
-
     def updatePotentialShipLocations(self):
         for name in self.ships.keys():
             ship = self.ships[name]

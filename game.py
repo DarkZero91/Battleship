@@ -1,8 +1,7 @@
-import numpy as np
-
-from bdi_agent import BDIAgent
 from minmax_agent import MinmaxAgent
 from board import Board
+
+
 class Game:
     
     def __init__(self, gridSize):
@@ -13,7 +12,6 @@ class Game:
         self.player1 = MinmaxAgent(self.p1Board, "Alice",0,3)
         self.player2 = MinmaxAgent(self.p2Board, "Bob",0,3)
         
-    
     def playRound(self):
         done = False
         self.player1.playRound(self.player2)
@@ -26,7 +24,8 @@ class Game:
             print self.player2.name + " lost.."
             done = True
         return done
-        
+
+
 if __name__ == "__main__":
     game = Game(10)
     rounds = 0
@@ -36,4 +35,3 @@ if __name__ == "__main__":
         done = game.playRound()
         
     print "game done in ", rounds, " rounds"
-        

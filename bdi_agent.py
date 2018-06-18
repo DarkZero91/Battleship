@@ -3,8 +3,8 @@ import numpy as np
 import cv2
 import random
 
+
 class BDIAgent(Player):
-    
     def __init__(self, board, name):
         Player.__init__(self, board, name)
         self.placeShips()
@@ -29,9 +29,7 @@ class BDIAgent(Player):
         self.killLocations[shipname][x,y] = 1
         self.killedShips.append(shipname)
         
-    
     def updatePotentialKillMap(self):
-        
         for name in self.ships.keys():
             if not name in self.killedShips:
                 potmap = np.zeros_like(self.hitGrid)
@@ -45,7 +43,6 @@ class BDIAgent(Player):
                 self.potentialKillLocations[name][potkill] = 1
             else:
                 self.potentialKillLocations[name] = np.zeros_like(self.hitGrid)
-            
             
     def updatePotentialShipLocations(self):
         for name in self.ships.keys():
@@ -101,4 +98,3 @@ class BDIAgent(Player):
         if result == 1 and killed != "":
             self.processKill(killed, x, y)
         self.visualize()
-        

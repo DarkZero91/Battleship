@@ -61,7 +61,7 @@
             <div class="card-body">
               <h3 class="card-title">Battleship</h3>
               <p class="card-text">
-                The game Battleship is a game in which two players play against each other in an attempt to be the first to sink all of the opponents ships. This is done by correctly guessing the locations of the opponents ships. Only the location of the players own ships is known at the start of the game.In the game, there are 5 types of ships:
+                The game Battleship is a game in which two players play against each other in an attempt to be the first to sink all of the opponents ships. This is done by correctly guessing the locations of the opponents ships. Only the location of the players own ships is known at the start of the game.In the game, there are four types of ships:
                 <ul>
                   <li>Carrier:  A ship with a length of 5. There is just one instance of this ship in the game.</li>
                   <li>Battleship: A ship with a length of 4. There are two instances of this ship in the game.</li>
@@ -71,6 +71,14 @@
                 The game consists of two distinct stages. In the first stage players place their ships on the board in such a way that it is hard for the other player to guess the locations of the ships correctly. This requires the player to have or think of a strategy. The second stage has the players interchangeably guess a potential location of an opponents ship. Once the opponent announces a hit, this may be regarded as a vital hint. A hit means that another potential area to hit exists in at least one of four directions.
                 <br /><br />
                 If a ship is hit completely, the player has to call which ship is killed. Example: “My Carrier-ship is sunken”
+              </p>
+			  <h3 class="card-title">Our adjustments on the game</h3>
+              <p class="card-text">
+				We did a couple of adjustments to the original game to make it more interesting for a BDI-implementation.
+                <h5>Symmetric guesses:</h5>
+                If one of the players asks the other player a certain location to have a ship placed at it or not, the player himself needs to reveal if at his own board this location contains a ship as well.
+				By using this type of symmetry in the game, we can make use of common knowledge. Both the players now know that for instance at position x,y there is a ship at player one's board and no ship at player two's board.
+                
               </p>
             </div>
           </div>
